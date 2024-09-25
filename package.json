@@ -4,16 +4,21 @@
     "description": "Example project for CI/CD pipeline with GitHub Actions",
     "main": "src/index.js",
     "scripts": {
-      "test": "npm run test:unit && npm run test:integration && npm run test:interface",
-      "test:unit": "mocha test/unit/**/*.test.js",
-      "test:integration": "mocha test/integration/**/*.test.js",
-      "test:interface": "mocha test/interface/**/*.test.js",
-      "build": "node build.js"
+        "test": "npm run test:unit && npm run test:integration && npm run test:interface",
+        "build": "node build.js",
+        "test:unit": "jest --ci --reporters=default --reporters=jest-junit --outputFile=test-reports/unit-report.xml",
+        "test:integration": "jest --ci --reporters=default --reporters=jest-junit --outputFile=test-reports/integration-report.xml",
+        "test:interface": "jest --ci --reporters=default --reporters=jest-junit --outputFile=test-reports/interface-report.xml"
+    
+        
     },
-    "dependencies": {},
+    "jest-junit": {
+    "outputDirectory": "./test-reports",
+    "outputName": "junit.xml"
+  },
     "devDependencies": {
-      "mocha": "^9.0.0",
-      "chai": "^4.3.0"
+        "chai": "^4.3.0",
+        "jest-junit": "^16.0.0",
+        "mocha": "^9.0.0"
     }
-  }
-  
+}

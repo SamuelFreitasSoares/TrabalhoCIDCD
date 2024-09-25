@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - Main
+      - main
 
 jobs:
   test:
@@ -12,15 +12,18 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
+
+      - name: Create Test Reports Directory
+        run: mkdir -p test-reports
 
       - name: Run Unit Tests
         run: npm run test:unit
@@ -31,7 +34,6 @@ jobs:
       - name: Run Interface Tests
         run: npm run test:interface
 
-      # Atualizado para usar a versão v3 do upload-artifact
       - name: Upload test results
         uses: actions/upload-artifact@v3
         with:
@@ -45,12 +47,12 @@ jobs:
     
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Node.js
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '20'
 
       - name: Install dependencies
         run: npm install
@@ -63,15 +65,3 @@ jobs:
         with:
           name: build-artifact
           path: build/output.txt
-
-  notify:
-    name: Notify Pipeline Completion
-    needs: [test, build]
-    runs-on: ubuntu-latest
-    
-    steps:
-      - name: Send Notification
-        env:
-          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
-        run: |
-          echo "Pipeline executed successfully!" | mailx -s "CI/CD Pipeline Notification" $EMAIL_RECIPIENT
