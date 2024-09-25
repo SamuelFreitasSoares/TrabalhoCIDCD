@@ -4,7 +4,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - main
+      - Main
 
 # Definimos três jobs principais: test, build e notify
 jobs:
