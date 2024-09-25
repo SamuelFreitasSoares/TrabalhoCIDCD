@@ -3,7 +3,7 @@ name: CI/CD Pipeline
 on:
   push:
     branches:
-      - Main
+      - main
 
 jobs:
   test:
@@ -34,7 +34,7 @@ jobs:
       - name: Run Interface Tests
         run: npm run test:interface
 
-      - name: Upload test results
+      - name: Upload Test Results
         uses: actions/upload-artifact@v3
         with:
           name: test-results
